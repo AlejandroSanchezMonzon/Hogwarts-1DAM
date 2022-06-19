@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IMagosRepository extends ICRUDRepository<Mago> {
-    void restoreJSON(Path path) throws SQLException;
 
     void restoreCSV(Path path) throws SQLException;
 

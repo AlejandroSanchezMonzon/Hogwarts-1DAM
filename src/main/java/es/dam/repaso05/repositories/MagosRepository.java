@@ -45,8 +45,8 @@ public class MagosRepository implements IMagosRepository {
         while(res.next()) {
             repository.add(
                     new Mago(
-                          res.getInt("id"),
-                          res.getString("nombre"),
+                            res.getInt("id"),
+                            res.getString("nombre"),
                             res.getString("apodo"),
                             LocalDate.parse(res.getString("fNacimiento")),
                             res.getString("casa"),
@@ -74,12 +74,13 @@ public class MagosRepository implements IMagosRepository {
 
     @Override
     public void update(Mago mago) throws SQLException {
-        String sql = "UPDATE HOGWARTS SET nombre = ?, apodo = ?, fNacimiento = ?, casa = ?, altura = ?, hechizo = ? WHERE id = ?";
+        var index = repository.indexOf(mago);
+        String sql = "UPDATE HOGWARTS SET apodo = ?, fNacimiento = ?, casa = ?, altura = ?, hechizo = ? WHERE id = ?";
         db.open();
         var res = db.update(sql, mago.getNombre(), mago.getApodo(), mago.getfNacimiento(), mago.getCasa(), mago.getAltura(), mago.getHechizo(), mago.getId());
         db.close();
 
-        repository.set(repository.indexOf(mago), mago);
+        repository.set(index, mago);
     }
 
     @Override
@@ -99,26 +100,9 @@ public class MagosRepository implements IMagosRepository {
         db.delete(sql);
         db.close();
 
-        repository.remove(0, repository.size() - 1);
+        repository.remove(0, repository.size() -1);
     }
 
-    @Override
-    public void restoreJSON(Path path) throws SQLException {
-        List<MagoDTO> magosDTO = storageJSON.importarJSON(path);
-        repository.clear();
-        String sql = "DELETE FROM HOGWARTS";
-        db.open();
-        db.update(sql);
-        db.close();
-
-        magosDTO.forEach(m -> {
-            try {
-                save(m.fromDTO());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
     @Override
     public void restoreCSV(Path path) throws SQLException {

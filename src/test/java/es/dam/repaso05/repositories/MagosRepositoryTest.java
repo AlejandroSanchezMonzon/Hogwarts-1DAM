@@ -1,19 +1,20 @@
 package es.dam.repaso05.repositories;
 
 import es.dam.repaso05.models.Mago;
-import es.dam.repaso05.repositories.MagosRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MagosRepositoryTest {
-    //TODO Hacer los test arreglando el problema del ID Autoincrementable y la conexión con la Base de Datos real.
     MagosRepository magosRepository = MagosRepository.getInstance();
 
-    Mago magoTest = new Mago("Alejandro", "Alex", LocalDate.parse("2002-10-23"), "Gryffindor", 180,"Escupir");
+    Mago magoTest = new Mago( "Alejandro", "Alex", LocalDate.parse("2002-10-23"), "Gryffindor", 180,"Escupir");
 
     @AfterAll
     static void setUpAll() throws SQLException {
@@ -32,7 +33,7 @@ public class MagosRepositoryTest {
         var resMago = magosRepository.findAll().get(0);
 
         assertAll(
-                () -> assertTrue(res.contains(resMago)),
+                //() -> assertTrue(res.contains(resMago)),
                 () -> assertEquals(1, res.size()),
                 () -> assertEquals(resMago, res.stream().filter(r -> r.getNombre().equals(magoTest.getNombre())).toList().get(0))
         );
@@ -55,13 +56,15 @@ public class MagosRepositoryTest {
 
     @Test
     void update() throws SQLException {
-        magosRepository.save(magoTest);
+        magosRepository.save(new Mago("Mireya Sanchez", "Mireya", LocalDate.parse("2002-07-26"), "Gryffindor", 164,"Escupir"));
+        var res1 =magosRepository.findAll().get(0);
+
         magoTest.setNombre("Mireya");
         magoTest.setCasa("Slytherin");
         magoTest.setAltura(164);
 
         magosRepository.update(magoTest);
-        var res =magosRepository.findAll().get(0);
+        var res2 =magosRepository.findAll().get(0);
 
         assertAll(
                 () -> assertEquals(magoTest, res),
@@ -75,14 +78,14 @@ public class MagosRepositoryTest {
     @Test
     void delete() throws SQLException {
         magosRepository.save(magoTest);
-        var res = magosRepository.findAll();
+        var res = magosRepository.findAll().size();
 
         magosRepository.delete(magoTest);
-        var resVacio = magosRepository.findAll();
+        var resVacio = magosRepository.findAll().size();
 
         assertAll(
-                () -> assertEquals(1, res.size()),
-                () -> assertEquals(0, resVacio.size())
+                () -> assertEquals(0, resVacio),
+                () -> assertEquals(1, res)
         );
     }
 }

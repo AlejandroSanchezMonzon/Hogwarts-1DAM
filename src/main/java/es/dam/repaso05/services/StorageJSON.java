@@ -6,11 +6,12 @@ import es.dam.repaso05.dto.MagoDTO;
 import es.dam.repaso05.utils.LocalDateAdapter;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class StorageJSON implements IStorageJSON<MagoDTO> {
     public static StorageJSON instance;
@@ -30,25 +31,24 @@ public class StorageJSON implements IStorageJSON<MagoDTO> {
 
     @Override
     public List<MagoDTO> importarJSON(Path path) {
-        //TODO Método de importar un archivo json obtenido de un Filechooser.
-        BufferedReader f;
-        StringBuilder json = new StringBuilder();
+        Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).setPrettyPrinting().create();
         List<MagoDTO> magos = new ArrayList<>();
-        String linea;
-
+        Reader reader = null;
         try {
-            f = new BufferedReader(new FileReader(String.valueOf(path)));
-            Gson gson = new Gson();
-            while ((linea = f.readLine()) != null) {
-                json.append(linea);
-            }
-
-            magos = gson.fromJson(f, List.class);
-
-        } catch (IOException e) {
+            reader = Files.newBufferedReader(Paths.get(String.valueOf(path)));
+            var magosArray = gson.fromJson(reader, MagoDTO[].class);
+            magos = List.of(magosArray);
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
         return magos;
     }
 

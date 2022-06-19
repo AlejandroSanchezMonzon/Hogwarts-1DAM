@@ -1,7 +1,9 @@
 package es.dam.repaso05.controllers;
 
+import es.dam.repaso05.dto.MagoDTO;
 import es.dam.repaso05.models.Mago;
 import es.dam.repaso05.repositories.MagosRepository;
+import es.dam.repaso05.services.StorageJSON;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 
 public class HogwartsController {
     MagosRepository magosRepository = MagosRepository.getInstance();
+
+    StorageJSON storageJSON = StorageJSON.getInstance();
 
     Mago[][] matriz = new Mago[5][5];
 
@@ -151,7 +155,16 @@ public class HogwartsController {
         Path path = fileChooser.showOpenDialog(nombreField.getScene().getWindow()).toPath();
 
         try {
-            magosRepository.restoreJSON(path);
+            var lista = storageJSON.importarJSON(path);
+            if (lista.size() > 0) {
+                magosRepository.deleteAll();
+                for (MagoDTO mago : lista) {
+                    magosRepository.save(mago.fromDTO());
+                }
+                System.out.println("Datos importados con éxito al repositorio: " + lista.size() + " magos");
+            } else {
+                System.out.println("Ha existido un problema al importar los datos");
+            }
             magosTable.setItems(magosRepository.findAll());
         } catch (SQLException e) {
             e.printStackTrace();
@@ -325,7 +338,7 @@ public class HogwartsController {
         int columna;
 
         while (magosCount <= 4) {
-            magoRandom = (int) (Math.random() * (magoList.size() - 1));
+            magoRandom = (int) (Math.random() * (magoList.size() -1));
             fila = (int) (Math.random() * 4);
             columna = (int) (Math.random() * 4);
 
