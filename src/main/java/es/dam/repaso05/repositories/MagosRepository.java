@@ -104,7 +104,20 @@ public class MagosRepository implements IMagosRepository {
 
     @Override
     public void restoreJSON(Path path) throws SQLException {
+        List<MagoDTO> magosDTO = storageJSON.importarJSON(path);
+        repository.clear();
+        String sql = "DELETE FROM HOGWARTS";
+        db.open();
+        db.update(sql);
+        db.close();
 
+        magosDTO.forEach(m -> {
+            try {
+                save(m.fromDTO());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override

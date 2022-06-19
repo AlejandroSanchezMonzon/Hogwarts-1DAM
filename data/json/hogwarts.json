@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": 22,
     "nombre": "Harry James Potter",
     "apodo": "Harry",
     "fNacimiento": "1980-07-31",
@@ -9,7 +9,7 @@
     "hechizo": "Patronus"
   },
   {
-    "id": 2,
+    "id": 23,
     "nombre": "Hermione Jean Granger",
     "apodo": "Hermione",
     "fNacimiento": "1979-09-19",
@@ -18,7 +18,7 @@
     "hechizo": "Patronus"
   },
   {
-    "id": 3,
+    "id": 24,
     "nombre": "Ron Weasley",
     "apodo": "Ron",
     "fNacimiento": "1980-03-01",
@@ -27,7 +27,7 @@
     "hechizo": "Locomotor"
   },
   {
-    "id": 4,
+    "id": 25,
     "nombre": "Cedric Diggory",
     "apodo": "Cedric",
     "fNacimiento": "1977-10-12",
@@ -36,7 +36,7 @@
     "hechizo": "Orchideous"
   },
   {
-    "id": 5,
+    "id": 26,
     "nombre": "Luna Lovegood",
     "apodo": "Luna",
     "fNacimiento": "1981-02-15",
@@ -45,7 +45,7 @@
     "hechizo": "Descendo"
   },
   {
-    "id": 6,
+    "id": 27,
     "nombre": "Draco Lucius Malfoy Black",
     "apodo": "Draco",
     "fNacimiento": "1980-07-05",
@@ -54,7 +54,7 @@
     "hechizo": "Incendio"
   },
   {
-    "id": 10,
+    "id": 28,
     "nombre": "Test Test",
     "apodo": "Test",
     "fNacimiento": "1980-01-01",
@@ -63,7 +63,7 @@
     "hechizo": "Lumos"
   },
   {
-    "id": 11,
+    "id": 29,
     "nombre": "Test Test",
     "apodo": "Test",
     "fNacimiento": "1980-01-01",
@@ -72,12 +72,21 @@
     "hechizo": "Lumos"
   },
   {
-    "id": 12,
+    "id": 30,
     "nombre": "Test Test",
     "apodo": "Test",
     "fNacimiento": "1980-01-01",
     "casa": "Gryffindor",
     "altura": 180,
     "hechizo": "Lumos"
+  },
+  {
+    "id": 32,
+    "nombre": "Alejandro",
+    "apodo": "Sánchez MOnzón",
+    "fNacimiento": "2001-10-23",
+    "casa": "Ravenclaw",
+    "altura": 183,
+    "hechizo": "Ninguno"
   }
 ]

@@ -33,7 +33,6 @@ public class StorageCSV implements IStorageCSV<MagoDTO> {
         try {
             fichero = new File(String.valueOf(path));
             f = new BufferedReader(new FileReader(fichero));
-            f.skip(49);
 
             String linea;
             while((linea = f.readLine()) != null) {

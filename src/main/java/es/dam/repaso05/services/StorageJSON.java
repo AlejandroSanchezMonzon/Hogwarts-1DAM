@@ -5,13 +5,12 @@ import com.google.gson.GsonBuilder;
 import es.dam.repaso05.dto.MagoDTO;
 import es.dam.repaso05.utils.LocalDateAdapter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class StorageJSON implements IStorageJSON<MagoDTO> {
     public static StorageJSON instance;
@@ -32,7 +31,25 @@ public class StorageJSON implements IStorageJSON<MagoDTO> {
     @Override
     public List<MagoDTO> importarJSON(Path path) {
         //TODO Método de importar un archivo json obtenido de un Filechooser.
-        return null;
+        BufferedReader f;
+        StringBuilder json = new StringBuilder();
+        List<MagoDTO> magos = new ArrayList<>();
+        String linea;
+
+        try {
+            f = new BufferedReader(new FileReader(String.valueOf(path)));
+            Gson gson = new Gson();
+            while ((linea = f.readLine()) != null) {
+                json.append(linea);
+            }
+
+            magos = gson.fromJson(f, List.class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return magos;
     }
 
     @Override

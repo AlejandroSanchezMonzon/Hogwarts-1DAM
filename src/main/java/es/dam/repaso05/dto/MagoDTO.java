@@ -39,6 +39,6 @@ public class MagoDTO implements Serializable {
     }
 
     public String toFile() {
-        return id + ',' + nombre + ',' + apodo + ',' + fNacimiento + ',' + casa + ',' + altura + ',' + hechizo + "\n";
+        return id + "," + nombre + "," + apodo + "," + fNacimiento + "," + casa + "," + altura + "," + hechizo;
     }
 }
